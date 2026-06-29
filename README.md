@@ -90,6 +90,9 @@ The website is fully responsive and works on:
 - Mobile Devices
 
 ---
+##Live Demo
+
+https://simranjaiswal801.github.io/Personal-Portfolio-Website/
 
 ## 📸 Screenshots
 
