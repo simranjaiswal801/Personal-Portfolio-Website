@@ -1,30 +1,40 @@
+// ===============================
 // Welcome Message
+// ===============================
 
-document.getElementById("welcomeMessage").innerHTML =
-  "Welcome to Simran's Portfolio Website!";
+const welcomeMessage = document.getElementById("welcomeMessage");
 
+if (welcomeMessage) {
+  welcomeMessage.textContent = "👋 Welcome to Simran's Portfolio Website!";
+}
+
+// ===============================
 // Dark Mode
+// ===============================
 
 const darkModeBtn = document.getElementById("darkModeBtn");
 
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-
-  localStorage.setItem(
-    "darkMode",
-    document.body.classList.contains("dark-mode"),
-  );
+// Load saved theme
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark-mode");
+  darkModeBtn.textContent = "☀ Light Mode";
 }
 
 darkModeBtn.addEventListener("click", toggleDarkMode);
 
-// Load Saved Preference
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
 
-if (localStorage.getItem("darkMode") === "true") {
-  document.body.classList.add("dark-mode");
+  const isDark = document.body.classList.contains("dark-mode");
+
+  darkModeBtn.textContent = isDark ? "☀ Light Mode" : "🌙 Dark Mode";
+
+  localStorage.setItem("darkMode", isDark);
 }
 
-// Form Validation
+// ===============================
+// Contact Form Validation
+// ===============================
 
 const form = document.querySelector("form");
 
@@ -34,9 +44,7 @@ function validateForm(event) {
   event.preventDefault();
 
   const name = document.getElementById("name").value.trim();
-
   const email = document.getElementById("email").value.trim();
-
   const message = document.getElementById("message").value.trim();
 
   const formMessage = document.getElementById("formMessage");
@@ -47,7 +55,9 @@ function validateForm(event) {
     return;
   }
 
-  if (!email.includes("@")) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailPattern.test(email)) {
     formMessage.style.color = "red";
     formMessage.textContent = "Please enter a valid email address.";
     return;
@@ -60,24 +70,26 @@ function validateForm(event) {
   }
 
   formMessage.style.color = "green";
-  formMessage.textContent = "Message sent successfully!";
+  formMessage.textContent = "✅ Message sent successfully!";
 
   form.reset();
+
+  setTimeout(() => {
+    formMessage.textContent = "";
+  }, 3000);
 }
 
-// Scroll To Top
+// ===============================
+// Scroll To Top Button
+// ===============================
 
 const topBtn = document.getElementById("topBtn");
 
-window.addEventListener("scroll", function () {
-  if (window.scrollY > 300) {
-    topBtn.style.display = "block";
-  } else {
-    topBtn.style.display = "none";
-  }
+window.addEventListener("scroll", () => {
+  topBtn.style.display = window.scrollY > 300 ? "block" : "none";
 });
 
-topBtn.addEventListener("click", function () {
+topBtn.addEventListener("click", () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
